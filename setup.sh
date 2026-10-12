@@ -38,6 +38,8 @@ plugins { id 'com.android.application' version '8.1.4' apply false }
 PJE
 
 cat > gradle.properties <<'PJE'
+android.useAndroidX=true
+android.enableJetifier=true
 org.gradle.jvmargs=-Xmx2g
 PJE
 
@@ -71,6 +73,9 @@ android {
 dependencies {
 }
 PJE
+
+echo "=== VERIFY ==="
+if grep -q appcompat app/build.gradle; then echo "WARNING: old file detected (appcompat present)"; else echo "OK: new file confirmed"; fi
 
 cat > app/src/main/AndroidManifest.xml <<'PJE'
 <?xml version="1.0" encoding="utf-8"?>
