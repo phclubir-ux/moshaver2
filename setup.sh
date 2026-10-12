@@ -37,6 +37,12 @@ cat > build.gradle <<'PJE'
 plugins { id 'com.android.application' version '8.1.4' apply false }
 PJE
 
+cat > gradle.properties <<'PJE'
+android.useAndroidX=true
+android.enableJetifier=true
+org.gradle.jvmargs=-Xmx2g
+PJE
+
 cat > app/build.gradle <<'PJE'
 plugins { id 'com.android.application' }
 android {
@@ -186,6 +192,7 @@ PJE
 
 echo "=== 4) Icons ==="
 wget -q -O icon.png "https://physicstory.ir/wp-content/uploads/2026/09/1231.png"
+[ -s icon.png ] || { echo "ICON DOWNLOAD FAILED"; exit 1; }
 for S in 108 162 216 324 432; do
   convert icon.png -resize ${S}x${S} -background white -gravity center -extent ${S}x${S} fg_${S}.png
 done
@@ -209,7 +216,7 @@ echo "sdk.dir=$HOME/android-sdk" > local.properties
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip -O /tmp/gradle.zip
 unzip -q /tmp/gradle.zip -d /opt
-/opt/gradle-8.4/bin/gradle assembleRelease --no-daemon -q
+/opt/gradle-8.4/bin/gradle assembleRelease --no-daemon
 cp app/build/outputs/apk/release/app-release.apk app-release.apk
 echo "=== DONE ==="
 ls -la app-release.apk
