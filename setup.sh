@@ -38,8 +38,6 @@ plugins { id 'com.android.application' version '8.1.4' apply false }
 PJE
 
 cat > gradle.properties <<'PJE'
-android.useAndroidX=true
-android.enableJetifier=true
 org.gradle.jvmargs=-Xmx2g
 PJE
 
@@ -71,7 +69,6 @@ android {
     }
 }
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
 }
 PJE
 
@@ -108,7 +105,7 @@ PJE
 
 cat > app/src/main/res/values/styles.xml <<'PJE'
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">#141519</item>
         <item name="android:navigationBarColor">#141519</item>
         <item name="android:windowBackground">#141519</item>
